@@ -55,7 +55,8 @@ class TestingController extends Controller
         return [[$response], $testingRules];
     }
 
-    private function getLoggers() {
+    private function getLoggers(): array
+    {
         $request = Http::post('https://pentest-tools.com/api?key=244cf074279f10e76d12fd2fb4f0fca027cd7515', [
             'op' => "get_loggers"
         ]);
@@ -91,6 +92,14 @@ class TestingController extends Controller
         return $this->testRequestResponse($response, $testingRules);
     }
 
+    /**
+     * Start the test
+     *
+     * @param array $response
+     * @param array $rules
+     *
+     * @return array
+     */
     #[ArrayShape(['passed' => "int", 'failed' => "int", 'test_done' => "int"])]
     public function testRequestResponse(array $response, array $rules): array
     {
@@ -99,18 +108,26 @@ class TestingController extends Controller
 
             $this->iterateOverRules($values, $rules);
 
-            $this->testsDone++;
         }
 
-        dd(['passed' => $this->passed, 'failed' => $this->failed, 'test_done' => $this->testsDone]);
+        dd(['passed' => $this->passed, 'failed' => $this->failed, 'test_done' => $this->testsDone, 'details' => $this->details]);
     }
 
-    private function iterateOverRules(array $values, array $testingRules)
+    /**
+     * Iterate over specified rules
+     *
+     * @param array $values
+     * @param array $testingRules
+     *
+     * @return void
+     */
+    private function iterateOverRules(array $values, array $testingRules): void
     {
         foreach ($values as $keyValue => $value) {
 
             if (isset($testingRules[$keyValue])) {
                 $currentRule = $testingRules[$keyValue];
+                $this->currentKey = $keyValue;
 
                 $this->currentType = $currentRule['type'];
 
@@ -119,10 +136,20 @@ class TestingController extends Controller
         }
     }
 
-    private function checkTypes(array $currentRule, mixed $value) {
+    /**
+     * Check rules/types
+     *
+     * @param array $currentRule
+     * @param mixed $value
+     *
+     * @return void
+     */
+    private function checkTypes(array $currentRule, mixed $value): void
+    {
         if ($this->currentType === 'array') {
 
-            $this->passed += $this->testingRulesRepository->check($value, $this->currentType);
+            $checkResult = $this->testingRulesRepository->check($value, $this->currentType);
+            $this->incrementPassedOrFailedAndLog($checkResult, $value);
 
             if (isset($currentRule['collection'])) {
                 foreach ($value as $collectionValue) {
@@ -132,11 +159,35 @@ class TestingController extends Controller
                 $this->iterateOverRules($value, $currentRule['object']);
             }
 
-        } else if ($this->testingRulesRepository->check($value, $this->currentType)) {
-            $this->passed++;
         } else {
-            $this->failed++;
+            $checkResult = $this->testingRulesRepository->check($value, $this->currentType);
+            $this->incrementPassedOrFailedAndLog($checkResult, $value);
         }
 
+        $this->testsDone++;
+    }
+
+    /**
+     * Increment passed or failed tests and log the details about every check
+     *
+     * @param bool $result
+     * @param mixed $value
+     *
+     * @return void
+     */
+    private function incrementPassedOrFailedAndLog(bool $result, mixed $value): void
+    {
+        $passedOrFailed = 'passed';
+        $failedDetails = '';
+
+        if (!$result) {
+            $passedOrFailed = 'failed';
+            $failedDetails = ucfirst($this->currentType) . ' has expected, but ' . gettype($value) . ' received.';
+        }
+
+        $this->details[$passedOrFailed][] = ucfirst($this->currentKey) . ' has ' . $passedOrFailed . '. ' . $failedDetails;
+
+
+        $this->$passedOrFailed++;
     }
 }
