@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\TestingRulesRepository;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\ArrayShape;
@@ -146,6 +147,8 @@ class TestingController extends Controller
      */
     private function checkTypes(array $currentRule, mixed $value): void
     {
+
+        $test = User::count();
         if ($this->currentType === 'array') {
 
             $checkResult = $this->testingRulesRepository->check($value, $this->currentType);
