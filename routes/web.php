@@ -29,3 +29,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::get('/testing', \App\Http\Controllers\TestingController::class);
+Route::get('/hosts', function () {
+    return 'plm';
+})->name('hosts');

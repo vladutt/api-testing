@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logics\ApiClient;
 use App\Models\User;
 use App\Repositories\TestingRulesRepository;
 use Illuminate\Support\Facades\Http;
@@ -10,11 +11,20 @@ use JetBrains\PhpStorm\ArrayShape;
 class TestingController extends Controller
 {
 
+    // Numbers of the results and details about those tests
     private int    $passed = 0;
     private int    $failed = 0;
     private int    $testsDone = 0;
     private array  $details = [];
+
+    /**
+     * Name of the current field that is checked
+     */
     private string $currentKey = '';
+
+    /**
+     * Current type to be checked. ex: string, integer, array...
+     */
     private string $currentType = '';
 
 
@@ -27,9 +37,13 @@ class TestingController extends Controller
     #[ArrayShape(['articles' => "mixed", 'rules' => "array"])]
     private function newsApiTest(): array
     {
-        $request = Http::get('https://newsapi.org/v2/everything?q=apple&from=2022-09-21&to=2022-09-21&sortBy=popularity&pageSize=2&apiKey=6cb38d870f3e465288db509687a37381');
+        $client = new ApiClient(
+            authMethod: 'key_param',
+            endpoint: 'https://newsapi.org/v2/everything?q=apple&from=2022-09-21&to=2022-09-21&sortBy=popularity&pageSize=2&apiKey=6cb38d870f3e465288db509687a37381',
+            requestMethod: 'get'
+        );
 
-        $response = json_decode($request->body(), true);
+        $response = $client->getResponse();
 
         $testingRules = [
             'status' => ['type' => 'string'],
@@ -53,14 +67,26 @@ class TestingController extends Controller
             ]
         ];
 
-        return [[$response], $testingRules];
+        return [$response, $testingRules];
     }
 
+    /**
+     * @throws \Exception
+     */
     private function getLoggers(): array
     {
-        $request = Http::post('https://pentest-tools.com/api?key=244cf074279f10e76d12fd2fb4f0fca027cd7515', [
-            'op' => "get_loggers"
-        ]);
+        $client = new ApiClient(
+            authMethod: 'key_param',
+            endpoint: 'https://pentest-tools.com/api?key=244cf074279f10e76d12fd2fb4f0fca027cd7515',
+            requestMethod: 'post',
+            parameters: ['op' => "get_loggers"]
+        );
+
+        $response = $client->getResponse();
+
+        if ($response['client_error'] || $response['server_error']) {
+            throw new \Exception('Request failed.');
+        }
 
         $rules = [
             'op_status' => [
@@ -74,23 +100,25 @@ class TestingController extends Controller
                     'label' => ['type' => 'string'],
                     'handler_url' => ['type' => 'string'],
                     'active_days' => ['type' => 'integer'],
-                    'num_requests' => ['type' => 'integer'],
+                    'num_requests' => ['type' => 'string'],
                     'requests_left' => ['type' => 'integer'],
                 ]
             ]
         ];
 
-        $response = json_decode($request->body(), true);
-
-        return [[$response], $rules];
+        return [$response, $rules];
     }
 
     #[ArrayShape(['passed' => "int", 'failed' => "int", 'test_done' => "int"])]
     public function __invoke(): array
     {
-        [$response, $testingRules] = $this->newsApiTest();
+        [$response, $testingRules] = $this->getLoggers();
 
-        return $this->testRequestResponse($response, $testingRules);
+        if ($response['client_error'] || $response['server_error']) {
+            throw new \Exception('The request was failed.');
+        }
+
+        return $this->testRequestResponse([$response['body']], $testingRules);
     }
 
     /**
@@ -183,12 +211,15 @@ class TestingController extends Controller
         $passedOrFailed = 'passed';
         $failedDetails = '';
 
+        $valueToBeDisplayed = is_array($value) ? json_encode($value) : $value;
+        $valueType = gettype($value);
+
         if (!$result) {
             $passedOrFailed = 'failed';
-            $failedDetails = ucfirst($this->currentType) . ' has expected, but ' . gettype($value) . ' received.';
+            $failedDetails = trans('validation.'.$this->currentType, ['attribute' => $this->currentKey]) . " Actual value: $valueToBeDisplayed";
         }
 
-        $this->details[$passedOrFailed][] = ucfirst($this->currentKey) . ' has ' . $passedOrFailed . '. ' . $failedDetails;
+        $this->details[$passedOrFailed][] = $this->currentKey . ' has ' . $passedOrFailed . '. ' . $failedDetails;
 
 
         $this->$passedOrFailed++;
