@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Logics\ApiClient;
+use App\Models\Host;
 use App\Models\User;
 use App\Repositories\TestingRulesRepository;
 use Illuminate\Support\Facades\Http;
+use Inertia\Inertia;
 use JetBrains\PhpStorm\ArrayShape;
 
 class TestingController extends Controller
@@ -32,6 +34,13 @@ class TestingController extends Controller
 
     public function __construct() {
         $this->testingRulesRepository = new TestingRulesRepository();
+    }
+
+    public function hosts() {
+
+        $hosts = Host::all();
+
+        return Inertia::render('Hosts', ['hosts' => $hosts]);
     }
 
     #[ArrayShape(['articles' => "mixed", 'rules' => "array"])]

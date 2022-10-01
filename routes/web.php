@@ -31,6 +31,4 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::get('/testing', \App\Http\Controllers\TestingController::class);
-Route::get('/hosts', function () {
-    return 'plm';
-})->name('hosts');
+Route::get('/hosts', [\App\Http\Controllers\TestingController::class, 'hosts'])->name('hosts');
