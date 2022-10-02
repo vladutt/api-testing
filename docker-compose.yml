@@ -17,6 +17,7 @@ services:
             - ./fpm-pool.conf:/etc/php/8.1/fpm/pool.d/www.conf
         ports:
             - "8080:80"
+            - "5173:5173"
 
     api-testing-mysql:
         image: mysql:latest
