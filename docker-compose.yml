@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+    api-testing-app:
+        privileged: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: api-testing-app
+        restart: unless-stopped
+        networks:
+            - api-testing-net
+        volumes:
+            - ./:/var/www/html
+            - ./supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+            - ./nginx.sample.conf:/etc/nginx/nginx.conf
+            - ./fpm-pool.conf:/etc/php/8.1/fpm/pool.d/www.conf
+        ports:
+            - "8080:80"
+
+    api-testing-mysql:
+        image: mysql:latest
+        container_name: api-testing-mysql
+        volumes:
+            - db_data:/var/lib/mysql
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        expose:
+            - 3306
+        networks:
+            - api-testing-net
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_DATABASE: api-testing
+            MYSQL_USER: api-testing
+            MYSQL_PASSWORD: api-testing
+
+volumes:
+    db_data:
+
+networks:
+    api-testing-net:
+        driver: bridge
