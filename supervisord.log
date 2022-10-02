@@ -4646,3 +4646,235 @@
 2022-10-02 13:07:18,440 INFO waiting for nginx, php-fpm to die
 2022-10-02 13:07:19,464 INFO stopped: php-fpm (exit status 78)
 2022-10-02 13:07:19,479 INFO stopped: nginx (exit status 0)
+2022-10-02 13:20:04,200 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 13:20:04,203 INFO supervisord started with pid 1
+2022-10-02 13:20:05,205 INFO spawned: 'nginx' with pid 8
+2022-10-02 13:20:05,207 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 13:20:05,280 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 13:20:06,282 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 13:20:06,282 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:10:32,077 WARN received SIGTERM indicating exit request
+2022-10-02 14:10:32,078 INFO waiting for nginx to die
+2022-10-02 14:10:33,082 INFO stopped: nginx (exit status 0)
+2022-10-02 14:10:34,146 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:10:34,148 INFO supervisord started with pid 1
+2022-10-02 14:10:35,151 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:10:35,152 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:10:36,222 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:10:36,223 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:10:36,223 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:10:37,226 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:10:38,295 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:10:38,296 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:10:39,299 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:10:39,363 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:10:40,365 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:15:21,717 WARN received SIGTERM indicating exit request
+2022-10-02 14:15:21,718 INFO waiting for nginx to die
+2022-10-02 14:15:22,722 INFO stopped: nginx (exit status 0)
+2022-10-02 14:15:27,821 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:15:27,825 INFO supervisord started with pid 1
+2022-10-02 14:15:28,828 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:15:28,830 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:15:29,890 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:15:29,890 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:15:29,891 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:15:30,894 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:15:31,991 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:15:31,992 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:15:32,994 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:15:33,064 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:15:34,066 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:18:54,313 WARN received SIGTERM indicating exit request
+2022-10-02 14:18:54,314 INFO waiting for nginx to die
+2022-10-02 14:18:55,318 INFO stopped: nginx (exit status 0)
+2022-10-02 14:18:56,299 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:18:56,302 INFO supervisord started with pid 1
+2022-10-02 14:18:57,305 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:18:57,306 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:18:58,367 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:18:58,368 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:18:58,368 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:18:59,370 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:19:00,431 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:00,431 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:01,434 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:19:02,513 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:02,514 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:03,517 INFO spawned: 'php-fpm' with pid 24
+2022-10-02 14:19:04,600 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:04,601 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:05,603 INFO spawned: 'php-fpm' with pid 25
+2022-10-02 14:19:06,667 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:06,668 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:07,670 INFO spawned: 'php-fpm' with pid 26
+2022-10-02 14:19:08,733 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:08,734 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:09,737 INFO spawned: 'php-fpm' with pid 27
+2022-10-02 14:19:10,802 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:10,802 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:11,805 INFO spawned: 'php-fpm' with pid 28
+2022-10-02 14:19:11,820 WARN received SIGTERM indicating exit request
+2022-10-02 14:19:11,821 INFO waiting for nginx, php-fpm to die
+2022-10-02 14:19:12,823 INFO stopped: php-fpm (terminated by SIGTERM)
+2022-10-02 14:19:12,826 INFO stopped: nginx (exit status 0)
+2022-10-02 14:19:17,418 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:19:17,421 INFO supervisord started with pid 1
+2022-10-02 14:19:18,423 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:19:18,425 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:19:19,453 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:19,453 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:19,454 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:20,457 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:19:21,482 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:21,482 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:22,485 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:19:23,509 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:23,509 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:24,512 INFO spawned: 'php-fpm' with pid 36
+2022-10-02 14:19:25,535 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:25,535 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:26,538 INFO spawned: 'php-fpm' with pid 37
+2022-10-02 14:19:27,562 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:19:27,563 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:28,566 INFO spawned: 'php-fpm' with pid 38
+2022-10-02 14:19:28,603 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:19:29,605 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:20:02,646 INFO reaped unknown pid 40
+2022-10-02 14:20:38,692 WARN received SIGTERM indicating exit request
+2022-10-02 14:20:38,693 INFO waiting for nginx to die
+2022-10-02 14:20:39,696 INFO stopped: nginx (exit status 0)
+2022-10-02 14:21:00,660 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:21:00,663 INFO supervisord started with pid 1
+2022-10-02 14:21:01,666 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:21:01,669 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:21:02,735 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:21:02,735 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:21:02,736 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:21:03,739 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:21:03,811 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:21:04,813 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:21:57,879 WARN received SIGTERM indicating exit request
+2022-10-02 14:21:57,880 INFO waiting for nginx to die
+2022-10-02 14:21:58,884 INFO stopped: nginx (exit status 0)
+2022-10-02 14:22:00,214 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:22:00,217 INFO supervisord started with pid 1
+2022-10-02 14:22:01,219 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:22:01,221 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:22:02,276 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:22:02,277 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:22:02,277 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:22:03,280 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:22:04,333 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:22:04,333 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:22:05,336 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:22:05,390 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:22:06,391 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:22:53,451 WARN received SIGTERM indicating exit request
+2022-10-02 14:22:53,452 INFO waiting for nginx to die
+2022-10-02 14:22:54,456 INFO stopped: nginx (exit status 0)
+2022-10-02 14:22:56,061 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:22:56,064 INFO supervisord started with pid 1
+2022-10-02 14:22:57,066 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:22:57,067 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:22:58,129 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:22:58,130 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:22:58,130 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:22:59,133 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:23:00,196 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:00,197 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:01,199 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:23:02,262 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:02,263 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:03,265 INFO spawned: 'php-fpm' with pid 24
+2022-10-02 14:23:04,326 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:04,327 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:05,329 INFO spawned: 'php-fpm' with pid 25
+2022-10-02 14:23:06,388 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:06,389 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:07,391 INFO spawned: 'php-fpm' with pid 26
+2022-10-02 14:23:08,457 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:08,458 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:09,460 INFO spawned: 'php-fpm' with pid 27
+2022-10-02 14:23:10,524 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:10,525 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:11,528 INFO spawned: 'php-fpm' with pid 28
+2022-10-02 14:23:12,586 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:12,587 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:13,590 INFO spawned: 'php-fpm' with pid 29
+2022-10-02 14:23:14,653 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:14,653 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:15,656 INFO spawned: 'php-fpm' with pid 30
+2022-10-02 14:23:16,714 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:16,715 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:17,718 INFO spawned: 'php-fpm' with pid 31
+2022-10-02 14:23:17,776 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:18,778 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:23:40,796 WARN received SIGTERM indicating exit request
+2022-10-02 14:23:40,797 INFO waiting for nginx to die
+2022-10-02 14:23:41,800 INFO stopped: nginx (exit status 0)
+2022-10-02 14:23:42,676 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:23:42,679 INFO supervisord started with pid 1
+2022-10-02 14:23:43,682 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:23:43,683 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:23:44,748 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:44,748 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:44,749 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:45,751 INFO spawned: 'php-fpm' with pid 22
+2022-10-02 14:23:46,813 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:46,813 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:47,816 INFO spawned: 'php-fpm' with pid 23
+2022-10-02 14:23:48,882 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:48,883 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:49,885 INFO spawned: 'php-fpm' with pid 24
+2022-10-02 14:23:50,948 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:50,949 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:51,951 INFO spawned: 'php-fpm' with pid 25
+2022-10-02 14:23:53,008 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:53,008 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:54,011 INFO spawned: 'php-fpm' with pid 26
+2022-10-02 14:23:55,071 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:55,072 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:56,074 INFO spawned: 'php-fpm' with pid 27
+2022-10-02 14:23:57,145 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:57,146 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:23:58,149 INFO spawned: 'php-fpm' with pid 28
+2022-10-02 14:23:59,208 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:23:59,208 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:24:00,211 INFO spawned: 'php-fpm' with pid 29
+2022-10-02 14:24:01,269 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:24:01,269 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:24:02,272 INFO spawned: 'php-fpm' with pid 30
+2022-10-02 14:24:03,331 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:24:03,332 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:24:04,335 INFO spawned: 'php-fpm' with pid 31
+2022-10-02 14:24:04,388 INFO exited: php-fpm (exit status 78; not expected)
+2022-10-02 14:24:05,390 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:25:42,508 WARN received SIGTERM indicating exit request
+2022-10-02 14:25:42,509 INFO waiting for nginx to die
+2022-10-02 14:25:43,512 INFO stopped: nginx (exit status 0)
+2022-10-02 14:25:44,719 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:25:44,721 INFO supervisord started with pid 1
+2022-10-02 14:25:45,724 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:25:45,725 INFO spawnerr: can't find command 'php8.1-fpm'
+2022-10-02 14:25:45,731 INFO gave up: php-fpm entered FATAL state, too many start retries too quickly
+2022-10-02 14:25:46,732 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:27:13,843 WARN received SIGTERM indicating exit request
+2022-10-02 14:27:13,844 INFO waiting for nginx to die
+2022-10-02 14:27:14,848 INFO stopped: nginx (exit status 0)
+2022-10-02 14:27:17,431 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:27:17,434 INFO supervisord started with pid 1
+2022-10-02 14:27:18,437 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:27:18,439 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:27:19,522 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:27:19,522 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:27:47,558 WARN received SIGTERM indicating exit request
+2022-10-02 14:27:47,559 INFO waiting for nginx, php-fpm to die
+2022-10-02 14:27:47,566 INFO stopped: php-fpm (exit status 0)
+2022-10-02 14:27:47,569 INFO stopped: nginx (exit status 0)
+2022-10-02 14:27:48,564 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2022-10-02 14:27:48,567 INFO supervisord started with pid 1
+2022-10-02 14:27:49,569 INFO spawned: 'nginx' with pid 8
+2022-10-02 14:27:49,571 INFO spawned: 'php-fpm' with pid 9
+2022-10-02 14:27:50,658 INFO success: nginx entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2022-10-02 14:27:50,659 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

@@ -39,4 +39,6 @@ WORKDIR /var/www/html
 
 COPY composer.json /var/www/html
 
+RUN service php8.1-fpm start
+
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
