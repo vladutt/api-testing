@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/inertia-vue3';
+import { defineComponent } from 'vue'
 
 defineProps({
     hosts: Object
@@ -33,7 +34,7 @@ defineProps({
                                           clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <input type="text" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                            <input type="text" v-model="searchTerm" @keyup="search" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
                         </div>
                     </div>
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -64,7 +65,7 @@ defineProps({
                         </thead>
                         <tbody>
                         <tr
-                            v-for="(host, index) in hosts"
+                            v-for="(host, index) in mutableHosts"
                             :key="index"
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
@@ -96,3 +97,36 @@ defineProps({
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script>
+import _ from "lodash";
+
+export default {
+    data() {
+        return {
+            searchTerm: '',
+            mutableHosts: ''
+        }
+    },
+    methods: {
+        search: _.throttle(function () {
+            if (this.searchTerm.length === 0) {
+                this.mutableHosts = this.hosts
+            }
+
+            axios.get(route('search-hosts'), {
+                params: {
+                    'searchTerm': this.searchTerm
+                }
+            })
+                .then((data) => {
+                    console.log(data);
+                    this.mutableHosts = data.data.data;
+                })
+        }, 1000)
+    },
+    mounted() {
+        this.mutableHosts = this.hosts;
+    }
+}
+</script>

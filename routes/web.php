@@ -36,3 +36,5 @@ Route::get('/hosts', [\App\Http\Controllers\TestingController::class, 'hosts'])-
 Route::get('phpinfo', function () {
    phpinfo();
 });
+
+Route::get('/search-hosts', [\App\Http\Controllers\TestingController::class, 'searchHosts'])->name('search-hosts');

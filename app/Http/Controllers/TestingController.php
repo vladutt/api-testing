@@ -3,44 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Logics\ApiClient;
+use App\Logics\ApiTesting;
 use App\Models\Host;
-use App\Models\User;
-use App\Repositories\TestingRulesRepository;
-use Illuminate\Support\Facades\Http;
+use Exception;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use JetBrains\PhpStorm\ArrayShape;
 
 class TestingController extends Controller
 {
 
-    // Numbers of the results and details about those tests
-    private int    $passed = 0;
-    private int    $failed = 0;
-    private int    $testsDone = 0;
-    private array  $details = [];
-
-    /**
-     * Name of the current field that is checked
-     */
-    private string $currentKey = '';
-
-    /**
-     * Current type to be checked. ex: string, integer, array...
-     */
-    private string $currentType = '';
-
-
-    private TestingRulesRepository $testingRulesRepository;
-
-    public function __construct() {
-        $this->testingRulesRepository = new TestingRulesRepository();
-    }
-
-    public function hosts() {
-
+    public function hosts(): \Inertia\Response
+    {
         $hosts = Host::all();
 
         return Inertia::render('Hosts', ['hosts' => $hosts]);
+    }
+
+    public function searchHosts(Request $request): \Symfony\Component\HttpFoundation\Response|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        $hosts = Host::where('host', 'LIKE', '%'.$request->searchTerm.'%')->get();
+
+        return jsend_success($hosts);
     }
 
     #[ArrayShape(['articles' => "mixed", 'rules' => "array"])]
@@ -118,119 +102,22 @@ class TestingController extends Controller
         return [$response, $rules];
     }
 
+    /**
+     * @throws Exception
+     */
     #[ArrayShape(['passed' => "int", 'failed' => "int", 'test_done' => "int"])]
     public function __invoke(): array
     {
         [$response, $testingRules] = $this->getLoggers();
 
         if ($response['client_error'] || $response['server_error']) {
-            throw new \Exception('The request was failed.');
+            throw new Exception('The request was failed.');
         }
 
-        return $this->testRequestResponse([$response['body']], $testingRules);
+        $apiTesting = new ApiTesting();
+
+        return $apiTesting->testRequestResponse([$response['body']], $testingRules);
     }
 
-    /**
-     * Start the test
-     *
-     * @param array $response
-     * @param array $rules
-     *
-     * @return array
-     */
-    #[ArrayShape(['passed' => "int", 'failed' => "int", 'test_done' => "int"])]
-    public function testRequestResponse(array $response, array $rules): array
-    {
 
-        foreach ($response as $key => $values) {
-
-            $this->iterateOverRules($values, $rules);
-
-        }
-
-        dd(['passed' => $this->passed, 'failed' => $this->failed, 'test_done' => $this->testsDone, 'details' => $this->details]);
-    }
-
-    /**
-     * Iterate over specified rules
-     *
-     * @param array $values
-     * @param array $testingRules
-     *
-     * @return void
-     */
-    private function iterateOverRules(array $values, array $testingRules): void
-    {
-        foreach ($values as $keyValue => $value) {
-
-            if (isset($testingRules[$keyValue])) {
-                $currentRule = $testingRules[$keyValue];
-                $this->currentKey = $keyValue;
-
-                $this->currentType = $currentRule['type'];
-
-                $this->checkTypes($currentRule, $value);
-            }
-        }
-    }
-
-    /**
-     * Check rules/types
-     *
-     * @param array $currentRule
-     * @param mixed $value
-     *
-     * @return void
-     */
-    private function checkTypes(array $currentRule, mixed $value): void
-    {
-
-        $test = User::count();
-        if ($this->currentType === 'array') {
-
-            $checkResult = $this->testingRulesRepository->check($value, $this->currentType);
-            $this->incrementPassedOrFailedAndLog($checkResult, $value);
-
-            if (isset($currentRule['collection'])) {
-                foreach ($value as $collectionValue) {
-                    $this->iterateOverRules($collectionValue, $currentRule['collection']);
-                }
-            } else {
-                $this->iterateOverRules($value, $currentRule['object']);
-            }
-
-        } else {
-            $checkResult = $this->testingRulesRepository->check($value, $this->currentType);
-            $this->incrementPassedOrFailedAndLog($checkResult, $value);
-        }
-
-        $this->testsDone++;
-    }
-
-    /**
-     * Increment passed or failed tests and log the details about every check
-     *
-     * @param bool $result
-     * @param mixed $value
-     *
-     * @return void
-     */
-    private function incrementPassedOrFailedAndLog(bool $result, mixed $value): void
-    {
-        $passedOrFailed = 'passed';
-        $failedDetails = '';
-
-        $valueToBeDisplayed = is_array($value) ? json_encode($value) : $value;
-        $valueType = gettype($value);
-
-        if (!$result) {
-            $passedOrFailed = 'failed';
-            $failedDetails = trans('validation.'.$this->currentType, ['attribute' => $this->currentKey]) . " Actual value: $valueToBeDisplayed";
-        }
-
-        $this->details[$passedOrFailed][] = $this->currentKey . ' has ' . $passedOrFailed . '. ' . $failedDetails;
-
-
-        $this->$passedOrFailed++;
-    }
 }
