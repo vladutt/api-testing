@@ -32,3 +32,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/testing', \App\Http\Controllers\TestingController::class);
 Route::get('/hosts', [\App\Http\Controllers\TestingController::class, 'hosts'])->name('hosts');
+
+Route::get('phpinfo', function () {
+   phpinfo();
+});
