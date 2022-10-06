@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
         @routes
         @vite('resources/js/app.js')
         @inertiaHead

@@ -15,13 +15,11 @@ RUN apt-get install -y --no-install-recommends \
     apt-get clean && rm -rf /var/lib/apt/lists*
 
 RUN apt-get update && apt-get -y install php${PHP_VERSION}-cli php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-mysql \
+    php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-mysql php${PHP_VERSION}-curl \
     php${PHP_VERSION}-opcache php${PHP_VERSION}-zip php${PHP_VERSION}-exif php${PHP_VERSION}-dom
 
 
 RUN chown -R nobody:nogroup /run
-
-#    docker-php-ext-install intl mbstring mysqli opcache pdo pdo_mysql zip exif
 
 RUN echo "date.timezone=${PHP_TIMEZONE=Europe/Bucharest}" >> /etc/php/8.1/fpm/conf.d/custom.ini && \
     echo "memory_limit=${PHP_MEMORY_LIMIT:-2G}" >> /etc/php/8.1/fpm/conf.d/custom.ini && \
