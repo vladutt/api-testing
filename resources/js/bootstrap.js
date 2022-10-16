@@ -14,35 +14,24 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import { useLoading } from 'vue3-loading-overlay';
 window.loading = useLoading;
+
 let loader = window.loading();
-
-
-// const instance = window.axios.create();
-// instance.interceptors.request.use(function () {
-//     loading.show({
-//         container: null,
-//         canCancel: true
-//     });
-// });
-// instance.interceptors.response.use(function () {/*...*/});
-
 axios.interceptors.request.use(config => {
 
     // Do something before request is sent
     loader.show({
         container: null,
-        canCancel: true
+        loader: 'bars',
+        'lock-scroll': true
     });
     return config;
 }, function(error) {
     loader.hide()
     return Promise.reject(error);
 });
-
 axios.interceptors.response.use(function(response) {
     // Do something with response data
     loader.hide()
-
     return response;
 }, function(error) {
     loader.hide()
