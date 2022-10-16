@@ -40,22 +40,27 @@ defineProps({
                         </div>
 
                         <button
+                                @click="openAddHostModal()"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Add host
                         </button>
                     </div>
 
-
-                    <button @click="modal.toggle()" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                        Toggle modal
-                    </button>
-
-                    <Modal :id="'add_host'" >
+                    <Modal :id="'add_host'" @close-modal="openAddHostModal()" :modal-status="add_modal">
                         <template #content>
-                            asdasd
+                            <div>
+                                <label for="host" class="block text-sm font-medium text-gray-900 dark:text-gray-300">Host</label>
+                                <input type="text" id="host" v-model="formData.host" class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example.com" required>
+                            </div>
+
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-900 dark:text-gray-400">Description</label>
+                                <textarea v-model="formData.description" id="message" rows="4" class="block mb-5 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Description..."></textarea>
+                            </div>
+
+                            <button type="button" @click="addHost()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>
                         </template>
                     </Modal>
-
 
                     <table class="w-full text-sm text-left text-gray-500 light:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
@@ -125,14 +130,17 @@ defineProps({
 
 <script>
 import Modal from '../Components/Modal.vue'
-
 export default {
     components: {Modal},
     data() {
         return {
             searchTerm: '',
             mutableHosts: '',
-            add_modal: false
+            add_modal: false,
+            formData: {
+                host: '',
+                description: ''
+            }
         }
     },
     methods: {
@@ -150,9 +158,26 @@ export default {
                     console.log(data);
                     this.mutableHosts = data.data.data;
                 })
-        }, 1000)
+        }, 1000),
+
+        openAddHostModal() {
+            this.add_modal = !this.add_modal;
+        },
+
+        addHost() {
+            const url = 'https://jsonplaceholder.typicode.com/posts/1';
+            axios.get(url).then((data) => console.log('REQUEST DATA'));
+        }
     },
     mounted() {
+        // let loader = loading();
+        // loader.show({
+        //     // Optional parameters
+        //     container: null,
+        //     canCancel: true
+        // });
+
+
         this.mutableHosts = this.hosts;
     }
 }
