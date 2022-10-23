@@ -39,23 +39,29 @@ defineProps({
                                    placeholder="Search for items">
                         </div>
 
-                        <button
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Add host
-                        </button>
+                        <Modal :id="'add_host'" :button_text="'Add host'">
+                            <template #content>
+                                <form ref="add_host">
+                                    <div class="mb-2">
+                                        <label for="host" class="block text-sm font-medium text-gray-900 dark:text-gray-400">Host</label>
+                                        <input type="text" id="host"
+                                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-white light:focus:ring-blue-500 light:focus:border-blue-500"
+                                               placeholder="example.com">
+                                    </div>
+
+                                    <div>
+                                        <label for="description" class="block text-sm font-medium text-gray-900 dark:text-gray-400">Description</label>
+                                        <textarea id="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Host description..."></textarea>
+                                    </div>
+
+                                    <button type="button" class="text-white mt-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Save</button>
+
+                                </form>
+
+                            </template>
+                        </Modal>
+
                     </div>
-
-
-                    <button @click="modal.toggle()" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-                        Toggle modal
-                    </button>
-
-                    <Modal :id="'add_host'" >
-                        <template #content>
-                            asdasd
-                        </template>
-                    </Modal>
-
 
                     <table class="w-full text-sm text-left text-gray-500 light:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
@@ -132,7 +138,11 @@ export default {
         return {
             searchTerm: '',
             mutableHosts: '',
-            add_modal: false
+            addModal: false,
+            newHost: {
+                host: '',
+                description: ''
+            }
         }
     },
     methods: {
@@ -146,11 +156,16 @@ export default {
                     'searchTerm': this.searchTerm
                 }
             })
-                .then((data) => {
-                    console.log(data);
-                    this.mutableHosts = data.data.data;
-                })
-        }, 1000)
+            .then((data) => {
+                this.mutableHosts = data.data.data;
+            })
+        }, 1000),
+        openModel() {
+            this.addModal = true;
+            setTimeout(function() {
+                this.addModal = false;
+            }, 200)
+        }
     },
     mounted() {
         this.mutableHosts = this.hosts;
