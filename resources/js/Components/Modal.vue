@@ -13,9 +13,7 @@
                 </button>
 
                 <div class="p-6">
-                    <div class="mt-4">
-                        <slot name="content"/>
-                    </div>
+                    <slot name="content"/>
                 </div>
             </div>
         </div>
@@ -33,19 +31,24 @@ export default {
             type: String,
             default: 'center'
         },
-        button_text: {
-            type: String,
-            default: 'Open Modal'
-        },
-        button_class: {
-            type: String,
-            default: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+        modalStatus: {
+            type: Boolean,
+            default: false
         }
     },
     name: "Modal",
     data() {
         return {
-            modal: null
+            modal: null,
+        }
+    },
+    watch: {
+        modalStatus(newModal, oldModal) {
+           if (newModal) {
+               this.modal.show();
+           }  else {
+               this.modal.hide()
+           }
         }
     },
     mounted() {
@@ -68,13 +71,17 @@ export default {
         };
 
         this.modal = new Modal(targetEl, options);
+
+        if (this.modalStatus) {
+            this.modal.show();
+        }  else {
+            this.modal.hide()
+        }
     },
     methods: {
         close() {
-            this.modal.hide()
-        },
-        open() {
-            this.modal.show()
+            this.modal.hide();
+            this.$emit("close-modal", false);
         }
     }
 }

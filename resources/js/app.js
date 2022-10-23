@@ -1,5 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 
 import 'flowbite';
 
