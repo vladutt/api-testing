@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Repositories\TestingRulesRepository;
 use JetBrains\PhpStorm\ArrayShape;
 
-class ApiTesting
+class RestTesting
 {
     //TODO - Add a method to check the rules
 
@@ -45,11 +45,13 @@ class ApiTesting
     public function testRequestResponse(array $response, array $rules): array
     {
 
-        foreach ($response as $key => $values) {
-
-            $this->iterateOverRules($values, $rules);
-
+        if (empty(array_diff_key($response,$rules))) {
+            $this->iterateOverRules($response, $rules);
+        } else {
+            $this->details['general'] = 'The response is quite different than rules.';
+            $this->failed++;
         }
+
 
         return [
             'passed' => $this->passed,
@@ -93,7 +95,6 @@ class ApiTesting
     private function checkTypes(array $currentRule, mixed $value): void
     {
 
-        $test = User::count();
         if ($this->currentType === 'array') {
 
             $checkResult = $this->testingRulesRepository->check($value, $this->currentType);
@@ -129,7 +130,8 @@ class ApiTesting
         $failedDetails = '';
 
         $valueToBeDisplayed = is_array($value) ? json_encode($value) : $value;
-        $valueType = gettype($value);
+        $valueToBeDisplayed = !empty($valueToBeDisplayed) ? $valueToBeDisplayed : 'null';
+//        $valueType = gettype($value);
 
         if (!$result) {
             $passedOrFailed = 'failed';

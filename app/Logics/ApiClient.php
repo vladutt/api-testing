@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Http;
 
 class ApiClient {
 
+    const AUTH_BASIC = 'basic';
+    const AUTH_BEARER = 'bearer';
+    const AUTH_KEY_PARAM = 'key_param';
+
     private array $authMethods = [
         'basic', 'bearer', 'key_param'
     ];
@@ -17,7 +21,8 @@ class ApiClient {
 
     public function __construct(
         public string $authMethod = '',
-        public string $authToken = '',
+        public string|null $authToken = null,
+        public array|null $authParam = null,
         public string $endpoint = '',
         public string $requestMethod = '',
         public array $parameters = [],
@@ -34,6 +39,10 @@ class ApiClient {
 
         if ($this->checkRequestMethods()) {
             throw new Exception('Invalid request method: ' . $this->authMethod . '.');
+        }
+
+        if ($this->authMethod === self::AUTH_KEY_PARAM && $this->authParam !== null) {
+            $this->parameters = $this->parameters + $this->authParam;
         }
 
         $this->sendRequest();

@@ -31,10 +31,39 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::get('/testing', \App\Http\Controllers\TestingController::class);
-Route::get('/hosts', [\App\Http\Controllers\TestingController::class, 'hosts'])->name('hosts');
+Route::get('/domains', [\App\Http\Controllers\TestingController::class, 'hosts'])->name('hosts');
+
+// todo - post route / maybe an api route
+Route::get('/add-endpoints', [\App\Http\Controllers\TestingController::class, 'addEndPoints'])->name('add_end_points');
 
 Route::get('phpinfo', function () {
    phpinfo();
 });
 
 Route::get('/search-hosts', [\App\Http\Controllers\TestingController::class, 'searchHosts'])->name('search-hosts');
+
+Route::get('altceva', function() {
+
+    dd(json_encode([
+        'status' => ['type' => 'string'],
+        'totalResults' => ['type' => 'integer'],
+        'articles' => [
+            'type' => 'array',
+            'collection' => [
+                'source' => [
+                    'type' => 'array',
+                    // 'keys' => 2, - to check the number of keys from object
+                    'object' => [
+                        'id' => ['type' => 'string'],
+                        'name' => ['type' => 'string'],
+                    ]
+                ],
+                'author' => ['type' => 'string'],
+                'title' => ['type' => 'string'],
+                'description' => ['type' => 'int'],
+                'url' => ['type' => 'string|url'],
+            ]
+        ]
+    ]));
+
+});

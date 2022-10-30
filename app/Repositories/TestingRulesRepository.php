@@ -36,4 +36,8 @@ class TestingRulesRepository
     {
         return is_null($value);
     }
+
+    private function url($value): bool {
+        return filter_var($value, FILTER_VALIDATE_URL);
+    }
 }

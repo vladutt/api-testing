@@ -22,4 +22,14 @@ class Host extends Model
             get: fn ($value) => Carbon::parse($value)->format('d-m-Y H:i')
         );
     }
+
+    protected function host() : Attribute {
+        return Attribute::make(
+            set: fn ($value) => url_parser($value),
+        );
+    }
+
+    public function endpoints() {
+        return $this->hasMany(Endpoint::class);
+    }
 }

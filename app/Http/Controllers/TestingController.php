@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Logics\ApiClient;
-use App\Logics\ApiTesting;
+use App\Logics\RestTesting;
+use App\Models\Endpoint;
 use App\Models\Host;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -27,40 +31,78 @@ class TestingController extends Controller
         return jsend_success($hosts);
     }
 
+    public function addEndPoints(Request $request) {
+
+        // TODO create an api call for this method - will be easy to add endpoints like this
+        // TODO - endpoint-uri fara AUTH
+
+        $validator  = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'path' => ['required', 'string'],
+            'rules' => ['required','json'], // TODO - custom validation for rules
+            'auth_method' => ['required', 'string'], // bearer / basic / param_key / user_pass
+            'auth_params' => ['required', 'json'], // parameters for auth
+            'parameters' => ['required', 'json']
+        ]);
+
+        if ($validator->fails()) {
+            return jsend_fail($validator->errors()->all());
+        }
+
+        $host = Host::find(2);
+
+        DB::beginTransaction();
+
+        try {
+            $endpoint = $host->endpoints()->create([
+                'name' => $request->name,
+                'path' => $request->path,
+                'rules' => $request->rules,
+                'host_id' => 2,
+            ]);
+
+            $endpoint->auth()->create([
+                'auth_method' => $request->auth_method,
+                'auth_params' => $request->auth_params,
+            ]);
+
+            $endpoint->parameters()->create([
+                'parameters' => $request->parameters
+            ]);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return jsend_error('Unexpected error... Please try again later.');
+        }
+
+        return jsend_success(['message' => 'The new endpoint was added.']);
+
+    }
+
     #[ArrayShape(['articles' => "mixed", 'rules' => "array"])]
     private function newsApiTest(): array
     {
+        $host = Host::with(['endpoints.auth', 'endpoints.parameters'])->find(3);
+
+        $endpoint = $host->endpoints[0];
+
+        $auth = $endpoint->auth;
+        $parameters = $endpoint->parameters;
+
+
         $client = new ApiClient(
-            authMethod: 'key_param',
-            endpoint: 'https://newsapi.org/v2/everything?q=apple&from=2022-09-21&to=2022-09-21&sortBy=popularity&pageSize=2&apiKey=6cb38d870f3e465288db509687a37381',
-            requestMethod: 'get'
+            authMethod: $auth['auth_method'],
+            authParam: $auth->auth_params,
+            endpoint: $host->host.$endpoint->path,
+            requestMethod: $endpoint->method,
+            parameters: $parameters->parameters
         );
 
         $response = $client->getResponse();
 
-        $testingRules = [
-            'status' => ['type' => 'string'],
-            'totalResults' => ['type' => 'integer'],
-            'articles' => [
-                'type' => 'array',
-                'collection' => [
-                    'source' => [
-                        'type' => 'array',
-                        // 'keys' => 2, - to check the number of keys from object
-                        'object' => [
-                            'id' => ['type' => 'string'],
-                            'name' => ['type' => 'string'],
-                        ]
-                    ],
-                    'author' => ['type' => 'string'],
-                    'title' => ['type' => 'string'],
-                    'description' => ['type' => 'int'],
-                    'url' => ['type' => 'string|url'],
-                ]
-            ]
-        ];
-
-        return [$response, $testingRules];
+        return [$response, $endpoint->rules];
     }
 
     /**
@@ -68,11 +110,19 @@ class TestingController extends Controller
      */
     private function getLoggers(): array
     {
+        $host = Host::with(['endpoints.auth', 'endpoints.parameters'])->find(2);
+
+        $endpoint = $host->endpoints[0];
+
+        $auth = $endpoint->auth;
+        $parameters = $endpoint->parameters;
+
         $client = new ApiClient(
-            authMethod: 'key_param',
-            endpoint: 'https://pentest-tools.com/api?key=244cf074279f10e76d12fd2fb4f0fca027cd7515',
-            requestMethod: 'post',
-            parameters: ['op' => "get_loggers"]
+            authMethod: $auth['auth_method'],
+            authParam: $auth->auth_params,
+            endpoint: 'https://'.$host->host.$endpoint->path,
+            requestMethod: $endpoint->method,
+            parameters: $parameters->parameters
         );
 
         $response = $client->getResponse();
@@ -81,23 +131,7 @@ class TestingController extends Controller
             throw new \Exception('Request failed.');
         }
 
-        $rules = [
-            'op_status' => [
-                'type' => 'string',
-                'values' => 'success'
-            ],
-            'loggers' => [
-               'type' => 'array',
-                'collection' => [
-                    'id' => ['type' => 'integer'],
-                    'label' => ['type' => 'string'],
-                    'handler_url' => ['type' => 'string'],
-                    'active_days' => ['type' => 'integer'],
-                    'num_requests' => ['type' => 'string'],
-                    'requests_left' => ['type' => 'integer'],
-                ]
-            ]
-        ];
+        $rules = $endpoint->rules;
 
         return [$response, $rules];
     }
@@ -108,15 +142,15 @@ class TestingController extends Controller
     #[ArrayShape(['passed' => "int", 'failed' => "int", 'test_done' => "int"])]
     public function __invoke(): array
     {
-        [$response, $testingRules] = $this->getLoggers();
+        [$response, $testingRules] = $this->newsApiTest();
 
         if ($response['client_error'] || $response['server_error']) {
             throw new Exception('The request was failed.');
         }
 
-        $apiTesting = new ApiTesting();
+        $apiTesting = new RestTesting();
 
-        return $apiTesting->testRequestResponse([$response['body']], $testingRules);
+        return $apiTesting->testRequestResponse($response['body'], $testingRules);
     }
 
 

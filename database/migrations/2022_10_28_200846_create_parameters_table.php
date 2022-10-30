@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('endpoints', function (Blueprint $table) {
+        Schema::create('parameters', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path');
-            $table->string('method');
-            $table->string('rules');
-            $table->foreignIdFor(\App\Models\Host::class);
+            $table->json('parameters');
+            $table->foreignIdFor(\App\Models\Endpoint::class);
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('endpoints');
+        Schema::dropIfExists('parameters');
     }
 };

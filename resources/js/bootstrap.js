@@ -15,27 +15,39 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import { useLoading } from 'vue3-loading-overlay';
 window.loading = useLoading;
 
-let loader = window.loading();
-axios.interceptors.request.use(config => {
+let loader = loading();
+let currentAxiosCalls = 0;
 
-    // Do something before request is sent
-    loader.show({
-        container: null,
-        loader: 'bars',
-        'lock-scroll': true
-    });
+window.axios.interceptors.request.use(config => {
+    console.log(typeof config.data !== 'undefined' && typeof config.data.withoutSpinner === 'undefined');
+
+    if (typeof config.data === 'undefined' && typeof config.params === 'undefined'
+        || (typeof config.data !== 'undefined' && typeof config.data.withoutSpinner === 'undefined')
+        || (typeof config.params !== 'undefined' && typeof config.params.wihtoutSpinner === 'undefined')) {
+
+        currentAxiosCalls++;
+        if (currentAxiosCalls === 1) {
+            loader.show({
+                container: null
+            }); // for every request start the progress
+        }
+    }
+
     return config;
-}, function(error) {
-    loader.hide()
-    return Promise.reject(error);
 });
-axios.interceptors.response.use(function(response) {
-    // Do something with response data
-    loader.hide()
+
+window.axios.interceptors.response.use(response => {
+    if (typeof response.config.data === 'undefined' && typeof response.config.params === 'undefined'
+        || (typeof response.config.data !== 'undefined' && typeof response.config.data.withoutSpinner === 'undefined')
+        || (typeof response.config.params !== 'undefined' && typeof response.config.params.wihtoutSpinner === 'undefined')) {
+
+        currentAxiosCalls--;
+        if (currentAxiosCalls === 0) {
+            loader.hide(); // hide when a response is received
+        }
+    }
+
     return response;
-}, function(error) {
-    loader.hide()
-    return Promise.reject(error);
 });
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
