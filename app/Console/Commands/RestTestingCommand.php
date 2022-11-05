@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Endpoint;
 use Illuminate\Console\Command;
 
 class RestTestingCommand extends Command
@@ -27,6 +28,10 @@ class RestTestingCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        $endpoints = Endpoint::with(['endpoints.auth', 'endpoints.parameters', 'host'])->cursor();
+
+        foreach ($endpoints as $endpoint) {
+            // send to RabbitMQ
+        }
     }
 }

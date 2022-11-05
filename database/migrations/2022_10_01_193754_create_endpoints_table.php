@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('path');
             $table->string('method');
             $table->string('rules');
+            $table->json('scheduled');
             $table->foreignIdFor(\App\Models\Host::class);
             $table->timestamps();
         });

@@ -87,6 +87,8 @@ class RestTesting
     /**
      * Check rules/types
      *
+     * TODO - should try to use Laravel validation for fields
+     *
      * @param array $currentRule
      * @param mixed $value
      *
@@ -95,6 +97,8 @@ class RestTesting
     private function checkTypes(array $currentRule, mixed $value): void
     {
 
+        // TODO - create function for split rules ex: string|url - should do 2 check string OR url
+        // TODO - create function for multiple rules ex: string&url that should be applied at least one rule.
         if ($this->currentType === 'array') {
 
             $checkResult = $this->testingRulesRepository->check($value, $this->currentType);

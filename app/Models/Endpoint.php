@@ -26,7 +26,7 @@ class Endpoint extends Model
     }
 
     public function host() {
-        return $this->hasOne(Host::class);
+        return $this->hasOne(Host::class, 'id', 'host_id');
     }
 
 }
