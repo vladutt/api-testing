@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "flowbite": "^1.5.3",
-        "vue3-loading-overlay": "^0.0.0"
+        "vue3-loading-overlay": "^0.0.0",
+        "vuestic-ui": "^1.5.1"
     }
 }

@@ -120,7 +120,7 @@ class TestingController extends Controller
         $client = new ApiClient(
             authMethod: $auth['auth_method'],
             authParam: $auth->auth_params,
-            endpoint: 'https://'.$host->host.$endpoint->path,
+            endpoint: $host->host.$endpoint->path,
             requestMethod: $endpoint->method,
             parameters: $parameters->parameters
         );

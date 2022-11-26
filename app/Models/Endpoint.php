@@ -29,4 +29,8 @@ class Endpoint extends Model
         return $this->hasOne(Host::class, 'id', 'host_id');
     }
 
+    public function getFullEndpointAttribute() {
+        return $this->host()->host.$this->endpoint;
+    }
+
 }
